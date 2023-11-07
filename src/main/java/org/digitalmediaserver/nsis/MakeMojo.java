@@ -56,6 +56,9 @@ public class MakeMojo extends AbstractMojo implements ProcessOutputConsumer {
 	/** The static Windows line separator sequence */
 	public static final String WINDOWS_LINE_SEPARATOR = "\r\n";
 
+	/** The default {@link CompressOption} */
+	public static final  CompressOption DEFAULT_COMPRESS = CompressOption.auto;
+
 	/** The default compression {@link CompressionType} */
 	public static final CompressionType DEFAULT_COMPRESSION = CompressionType.zlib;
 
@@ -82,6 +85,12 @@ public class MakeMojo extends AbstractMojo implements ProcessOutputConsumer {
 	/** The classifier to append to {@link outputFile}'s name. */
 	@Parameter(property = "nsis.classifier")
 	private String classifier;
+
+	/**
+	 * The {@link CompressOption} to apply to {@link #scriptFile}.
+	 */
+	@Parameter(property = "nsis.compress")
+	private CompressOption compress = DEFAULT_COMPRESS;
 
 	/**
 	 * The {@link CompressionType} to apply to {@link #scriptFile}.
@@ -420,23 +429,30 @@ public class MakeMojo extends AbstractMojo implements ProcessOutputConsumer {
 		}
 		result.add(optionPrefix + "V" + verbosityLevel);
 
-		// Compression
-		if (
-			compression != null && (
-				compression != DEFAULT_COMPRESSION || compressionIsFinal || compressionIsSolid
-		)) {
-			StringBuilder setCompressor = new StringBuilder(optionPrefix + "XSetCompressor");
-			if (compressionIsFinal) {
-				setCompressor.append(" /FINAL");
-			}
-			if (compressionIsSolid) {
-				setCompressor.append(" /SOLID");
-			}
-			setCompressor.append(' ').append(compression.name());
-			result.add(setCompressor.toString());
+		// Compress
+		if (compress != null) {
+			result.add(optionPrefix + "XSetCompress " + compress.name());
 
-			if (compression == CompressionType.lzma && compressionDictSize != DEFAULT_LZMA_DICT_SIZE) {
-				result.add(optionPrefix + "XSetCompressorDictSize " + compressionDictSize);
+			// Compression
+			if (compress != CompressOption.off) {
+				if (
+					compression != null && (
+						compression != DEFAULT_COMPRESSION || compressionIsFinal || compressionIsSolid
+				)) {
+					StringBuilder setCompressor = new StringBuilder(optionPrefix + "XSetCompressor");
+					if (compressionIsFinal) {
+						setCompressor.append(" /FINAL");
+					}
+					if (compressionIsSolid) {
+						setCompressor.append(" /SOLID");
+					}
+					setCompressor.append(' ').append(compression.name());
+					result.add(setCompressor.toString());
+
+					if (compression == CompressionType.lzma && compressionDictSize != DEFAULT_LZMA_DICT_SIZE) {
+						result.add(optionPrefix + "XSetCompressorDictSize " + compressionDictSize);
+					}
+				}
 			}
 		}
 

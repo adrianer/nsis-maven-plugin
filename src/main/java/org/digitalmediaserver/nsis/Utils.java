@@ -312,6 +312,26 @@ public final class Utils {
 	}
 
 	/**
+	 * An enum representing the supported compress options.
+	 *
+	 * @author Nadahar
+	 */
+	public enum CompressOption {
+
+		/**
+		 * Files are compressed if the compressed size is smaller than the
+		 * uncompressed size
+		 */
+		auto,
+
+		/** Files are always compressed */
+		force,
+
+		/** Files are never compressed (faster) */
+		off
+	}
+
+	/**
 	 * An enum representing the supported compression types.
 	 *
 	 * @author Nadahar

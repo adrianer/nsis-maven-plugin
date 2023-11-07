@@ -10,7 +10,8 @@ This Maven plugin allows you to build NSIS executables during your Maven build. 
     - [1.1.1 Parameter description](#111-parameter-description)
   - [1.2 Goal `make`](#12-goal-make)
     - [1.2.1 Parameter description](#121-parameter-description)
-    - [1.2.2 `compression` options](#122-compression-options)
+    - [1.2.2 `compress` options](#122-compress-options)
+    - [1.2.3 `compression` options](#123-compression-options)
   - [1.3 Skeleton project configuration](#13-skeleton-project-configuration)
 - [2. Using the plugin](#2-using-the-plugin)
   - [2.1 Example configuration](#21-example-configuration)
@@ -66,7 +67,8 @@ This goal compiles a NSIS script and builds a Windows executable.
 |<sub>`attachArtifact`</sub>|<sub>`nsis.attachArtifact`</sub>|<sub>Boolean</sub>|<sub>`true`</sub>|<sub>Whether or not `outputFile` should be attached to the Maven build. You probably want an installer to be attached, but if you build another executable that might not be the case.</sub>|
 |<sub>`autoNsisDir`</sub>|<sub>`nsis.auto.nsisdir`</sub>|<sub>Boolean</sub>|<sub>true</sub>|<sub>Whether or not to automatically set the `NSISDIR` environment variable based on the folder where the `makensis` executable is located. Useful when `makensis` is compiled with `NSIS_CONFIG_CONST_DATA_PATH=no`.</sub>|
 |<sub>`classifier`</sub>|<sub>`nsis.classifier`</sub>|<sub>String</sub>| |<sub>The classifier to append to `outputFile`'s name.</sub>|
-|<sub>`compression`</sub>|<sub>`nsis.compression`</sub>|<sub>Enum</sub>| <sub>`zlib`</sub>|<sub>The compression type to apply to `scriptFile` if ant. See [separate definition](#122-compression-options).</sub>|
+|<sub>`compress`</sub>|<sub>`nsis.compress`</sub>|<sub>Enum</sub>|<sub>`auto`</sub>|<sub>The compress option to apply to `scriptFile`. See [separate definition](#122-compress-options).</sub>|
+|<sub>`compression`</sub>|<sub>`nsis.compression`</sub>|<sub>Enum</sub>|<sub>`zlib`</sub>|<sub>The compression type to apply to `scriptFile`. See [separate definition](#123-compression-options).</sub>|
 |<sub>`compressionDictSize`</sub>|<sub>`nsis.compression.lzma.dictsize`</sub>|<sub>Integer</sub>|<sub>`8`</sub>|<sub>The dictionary size in MB to use if `compression` is `lzma`.</sub>|
 |<sub>`compressionIsFinal`</sub>|<sub>`nsis.compression.final`</sub>|<sub>Boolean</sub>|<sub>`false`</sub>|<sub>Whether or not the compression defined in `compression` is`FINAL`.</sub>|
 |<sub>`compressionIsSolid`</sub>|<sub>`nsis.compression.solid`</sub>|<sub>Boolean</sub>|<sub>`false`</sub>|<sub>Whether or not the compression defined in `compression` is`SOLID`.</sub>|
@@ -83,7 +85,15 @@ This goal compiles a NSIS script and builds a Windows executable.
 |<sub>`scriptFile`</sub>|<sub>`nsis.scriptfile`</sub>|<sub>String</sub>|<sub>`setup.nsi`</sub>|<sub>The path of the NSIS script file to compile.</sub>|
 |<sub>`verbosityLevel`</sub>|<sub>`nsis.verbosity`</sub>|<sub>Integer</sub>|<sub>`2`</sub>|<sub>The verbosity level to pass to `makensis`.</sub>|
 
-#### 1.2.2 `compression` options
+#### 1.2.2 `compress` options
+
+| Code | Default | Description |
+|--|:--:|--|
+|`auto`|__*__|Files are compressed if the compressed size is smaller than the uncompressed size.|
+|`force`| |Files are always compressed.|
+|`off`| |Files are never compressed (faster).|
+
+#### 1.2.3 `compression` options
 
 | Code | Default | Description |
 |--|:--:|--|
@@ -110,6 +120,7 @@ Here is a skeleton project configuration showing the potential locations of all 
                     <attachArtifact></attachArtifact>
                     <autoNsisDir></autoNsisDir>
                     <classifier></classifier>
+                    <compress></compress>
                     <compression></compression>
                     <compressionDictSize></compressionDictSize>
                     <compressionIsFinal></compressionIsFinal>
@@ -145,6 +156,7 @@ Here is a skeleton project configuration showing the potential locations of all 
                             <attachArtifact></attachArtifact>
                             <autoNsisDir></autoNsisDir>
                             <classifier></classifier>
+                            <compress></compress>
                             <compression></compression>
                             <compressionDictSize></compressionDictSize>
                             <compressionIsFinal></compressionIsFinal>
@@ -214,6 +226,7 @@ Here is an example configuration showing how to generate a header file, a Window
                     <makensisExecutable>${project.external-resources}/third-party/nsis/Bin/makensis.exe</makensisExecutable>
                     <makensisExecutableLinux>${project.external-resources}/third-party/nsis/Bin/makensisLinux</makensisExecutableLinux>
                     <makensisExecutableMacOS>${project.external-resources}/third-party/nsis/Bin/makensisMacOS</makensisExecutableMacOS>
+                    <compress>auto</compress>
                     <compression>lzma</compression>
                     <compressionIsFinal>true</compressionIsFinal>
                     <compressionDictSize>64</compressionDictSize>
