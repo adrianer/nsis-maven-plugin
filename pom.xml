@@ -50,7 +50,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<pluginPluginVersion>3.5.2</pluginPluginVersion>
+		<mavenCoreVersion>3.8.6</mavenCoreVersion>
+		<pluginPluginVersion>3.6.1</pluginPluginVersion>
 		<javadocPluginVersion>3.0.1</javadocPluginVersion>
 		<plexusComponentJavadocVersion>1.7.1</plexusComponentJavadocVersion>
 	</properties>
@@ -59,29 +60,29 @@
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-model</artifactId>
-			<version>3.5.4</version>
+			<version>${mavenCoreVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.plugin-tools</groupId>
 			<artifactId>maven-plugin-annotations</artifactId>
-			<version>3.5.2</version>
+			<version>${pluginPluginVersion}</version>
 			<!-- annotations are not used at runtime because @Retention(value=CLASS), they are needed only to build the plugin -->
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-core</artifactId>
-			<version>3.5.4</version>
+			<version>${mavenCoreVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-plugin-api</artifactId>
-			<version>3.5.4</version>
+			<version>${mavenCoreVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
-			<artifactId>annotations</artifactId>
-			<version>3.0.1u2</version>
+			<artifactId>jsr305</artifactId>
+			<version>3.0.2</version>
 		</dependency>
 	</dependencies>
 
@@ -309,7 +310,7 @@
 								<tagletArtifact>
 									<groupId>org.apache.maven.plugin-tools</groupId>
 									<artifactId>maven-plugin-tools-javadoc</artifactId>
-									<version>${pluginPluginVersion}</version>
+									<version>3.5.2</version>
 								</tagletArtifact>
 								<tagletArtifact>
 									<groupId>org.codehaus.plexus</groupId>
@@ -331,6 +332,9 @@
 								<goals>
 									<goal>sign</goal>
 								</goals>
+								<configuration>
+									<keyname>${ossrh-keyname}</keyname>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
@@ -372,7 +376,7 @@
 						<tagletArtifact>
 							<groupId>org.apache.maven.plugin-tools</groupId>
 							<artifactId>maven-plugin-tools-javadoc</artifactId>
-							<version>${pluginPluginVersion}</version>
+							<version>3.5.2</version>
 						</tagletArtifact>
 						<tagletArtifact>
 							<groupId>org.codehaus.plexus</groupId>
