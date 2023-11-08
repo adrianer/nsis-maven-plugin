@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.4] - 2023-11-07
+### Added
+- Implemented `compress` as a parameter for `scriptFile`.
+
 ## [1.0.3] - 2020-11-26
 ### Fixed
 - Fixed makensis location resolution from OS path environment variable ([#6](https://github.com/DigitalMediaServer/nsis-maven-plugin/pull/6)). Thanks to [@adamretter](https://github.com/adamretter) for pinpointing the problem.
@@ -24,7 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2018-07-29
 ### First release
 
-[Unreleased]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.3...HEAD
+[Unreleased]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.4...HEAD
+[1.0.4]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.0...v1.0.1
