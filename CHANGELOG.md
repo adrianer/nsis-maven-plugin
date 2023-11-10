@@ -6,9 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.5] - 2023-11-10
+### Added
+- Added logging of the `makensis` call with arguments.
+### Fixed
+- Tweaked the logic of the `compress` parameter to only be explicit when it deviates from the default option.
+- Clarified the use of the `compress` and `compression` parameters in the documentation.
+
 ## [1.0.4] - 2023-11-07
 ### Added
-- Implemented `compress` as a parameter for `scriptFile`.
+- Implemented `compress` as a parameter for the `makensis` call.
 
 ## [1.0.3] - 2020-11-26
 ### Fixed
@@ -28,7 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2018-07-29
 ### First release
 
-[Unreleased]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.4...HEAD
+[Unreleased]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.5...HEAD
+[1.0.5]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.1...v1.0.2
