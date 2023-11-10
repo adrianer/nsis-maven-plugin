@@ -90,7 +90,7 @@ public class MakeMojo extends AbstractMojo implements ProcessOutputConsumer {
 	 * The {@link CompressOption} to apply to {@link #scriptFile}.
 	 */
 	@Parameter(property = "nsis.compress")
-	private CompressOption compress = DEFAULT_COMPRESS;
+	private CompressOption compress;
 
 	/**
 	 * The {@link CompressionType} to apply to {@link #scriptFile}.
@@ -216,7 +216,8 @@ public class MakeMojo extends AbstractMojo implements ProcessOutputConsumer {
 
 		validate();
 
-		ProcessBuilder builder = new ProcessBuilder(commandBuilder());
+		List<String> arguments = commandBuilder();
+		ProcessBuilder builder = new ProcessBuilder(arguments);
 		// Set the working directory
 		if (makeFolder == null) {
 			builder.directory(project.getBasedir());
@@ -249,6 +250,11 @@ public class MakeMojo extends AbstractMojo implements ProcessOutputConsumer {
 
 		Charset charset = IS_WINDOWS ? Charset.defaultCharset() : StandardCharsets.UTF_8;
 		try {
+			StringBuilder sb = new StringBuilder("Executing:");
+			for (String part : arguments) {
+				sb.append(' ').append(part);
+			}
+			getLog().info(sb.toString());
 			long start = System.currentTimeMillis();
 			Process process = builder.start();
 			ProcessOutputHandler output = new ProcessOutputHandler(process.getInputStream(), this, charset);
@@ -430,28 +436,28 @@ public class MakeMojo extends AbstractMojo implements ProcessOutputConsumer {
 		result.add(optionPrefix + "V" + verbosityLevel);
 
 		// Compress
-		if (compress != null) {
+		if (compress != null && compress != DEFAULT_COMPRESS) {
 			result.add(optionPrefix + "XSetCompress " + compress.name());
+		}
 
-			// Compression
-			if (compress != CompressOption.off) {
-				if (
-					compression != null && (
-						compression != DEFAULT_COMPRESSION || compressionIsFinal || compressionIsSolid
-				)) {
-					StringBuilder setCompressor = new StringBuilder(optionPrefix + "XSetCompressor");
-					if (compressionIsFinal) {
-						setCompressor.append(" /FINAL");
-					}
-					if (compressionIsSolid) {
-						setCompressor.append(" /SOLID");
-					}
-					setCompressor.append(' ').append(compression.name());
-					result.add(setCompressor.toString());
+		// Compression
+		if (compress != CompressOption.off) {
+			if (
+				compression != null && (
+					compression != DEFAULT_COMPRESSION || compressionIsFinal || compressionIsSolid
+			)) {
+				StringBuilder setCompressor = new StringBuilder(optionPrefix + "XSetCompressor");
+				if (compressionIsFinal) {
+					setCompressor.append(" /FINAL");
+				}
+				if (compressionIsSolid) {
+					setCompressor.append(" /SOLID");
+				}
+				setCompressor.append(' ').append(compression.name());
+				result.add(setCompressor.toString());
 
-					if (compression == CompressionType.lzma && compressionDictSize != DEFAULT_LZMA_DICT_SIZE) {
-						result.add(optionPrefix + "XSetCompressorDictSize " + compressionDictSize);
-					}
+				if (compression == CompressionType.lzma && compressionDictSize != DEFAULT_LZMA_DICT_SIZE) {
+					result.add(optionPrefix + "XSetCompressorDictSize " + compressionDictSize);
 				}
 			}
 		}
