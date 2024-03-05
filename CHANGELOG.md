@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.6] - 2024-03-05
+### Fixed
+- Added `UTF-8 BOM` to the generated header file, which is necessary for NSIS to interpret the file as being `UTF-8`.
+
 ## [1.0.5] - 2023-11-10
 ### Added
 - Added logging of the `makensis` call with arguments.
@@ -35,7 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2018-07-29
 ### First release
 
-[Unreleased]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.5...HEAD
+[Unreleased]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.6...HEAD
+[1.0.6]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/DigitalMediaServer/nsis-maven-plugin/compare/v1.0.2...v1.0.3
