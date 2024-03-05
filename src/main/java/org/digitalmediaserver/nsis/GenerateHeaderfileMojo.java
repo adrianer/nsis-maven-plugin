@@ -83,7 +83,7 @@ public class GenerateHeaderfileMojo extends AbstractMojo {
 	 * {@code makensis}.
 	 */
 	@Parameter
-	private Map<String, String> defines = new HashMap<String, String>();
+	private Map<String, String> defines = new HashMap<>();
 
 	/**
 	 * Indicates if the NSIS make operation should be disabled. If {@code true},
@@ -122,7 +122,7 @@ public class GenerateHeaderfileMojo extends AbstractMojo {
 		}
 
 		try (FormattedWriter writer = new FormattedWriter(headerPath, MakeMojo.WINDOWS_LINE_SEPARATOR)) {
-			writer.writeln("; Header file with project details for %s", project.getName());
+			writer.writeln("\ufeff; Header file with project details for %s", project.getName());
 			writer.writeln("; Generated from pom.xml version %1$s on %2$tF %2$tT", project.getVersion(), Calendar.getInstance());
 			writer.newLine();
 
