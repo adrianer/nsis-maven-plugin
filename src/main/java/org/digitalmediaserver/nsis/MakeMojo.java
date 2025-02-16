@@ -185,7 +185,7 @@ public class MakeMojo extends AbstractMojo implements ProcessOutputConsumer {
 	private String nsisDir;
 
 	/** The path of the executable file to build. */
-	@Parameter(property = "nsis.output.file", defaultValue = "${project.build.finalName}.exe", required = true)
+	@Parameter(property = "nsis.output.file")
 	private String outputFile;
 
 	/** The path of the NSIS script file to compile. */
@@ -376,12 +376,6 @@ public class MakeMojo extends AbstractMojo implements ProcessOutputConsumer {
 					if (compressionPattern != null && compressionPattern.matcher(line).find()) {
 						throw new MojoExecutionException(
 							"Final compression is set in the plugin configuration but is also " +
-							"defined in script file \"" + scriptFile + "\" on line " + lineNo + "."
-						);
-					}
-					if (outputPattern != null && outputPattern.matcher(line).find()) {
-						throw new MojoExecutionException(
-							"The output file is set in the plugin configuration but is also " +
 							"defined in script file \"" + scriptFile + "\" on line " + lineNo + "."
 						);
 					}
