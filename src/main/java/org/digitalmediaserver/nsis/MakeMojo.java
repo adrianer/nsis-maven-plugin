@@ -66,6 +66,13 @@ public class MakeMojo extends AbstractMojo implements ProcessOutputConsumer {
 	public static final int DEFAULT_LZMA_DICT_SIZE = 8;
 
 	/**
+	 * A map of additional defines which will be passed to the execution of
+	 * {@code makensis}.
+	 */
+	@Parameter
+	private Map<String, String> defines = new HashMap<>();
+
+	/**
 	 * Whether or not {@link #outputFile} should be attached to the Maven build.
 	 * You probably want an installer to be attached, but if you build another
 	 * executable that might not be the case.
@@ -409,6 +416,13 @@ public class MakeMojo extends AbstractMojo implements ProcessOutputConsumer {
 		// Include header file
 		if (injectHeaderFile && headerFile.exists()) {
 			result.add(optionPrefix + "X!include " + formatStringArgument(headerFile.getAbsolutePath(), false));
+		}
+
+		// Add defines
+		if (defines != null) {
+			for (Entry<String, String> entry : defines.entrySet()) {
+				result.add(optionPrefix + "D" + entry.getKey().toUpperCase(Locale.ROOT) + entry.getValue());
+			}
 		}
 
 		// Installer output file
