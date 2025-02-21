@@ -422,7 +422,7 @@ public class MakeMojo extends AbstractMojo implements ProcessOutputConsumer {
 		// Add defines
 		if (defines != null) {
 			for (Entry<String, String> entry : defines.entrySet()) {
-				result.add(optionPrefix + "D" + entry.getKey().toUpperCase(Locale.ROOT) + entry.getValue());
+				result.add(optionPrefix + "D" + entry.getKey().toUpperCase(Locale.ROOT) + "=" + entry.getValue());
 			}
 		}
 
